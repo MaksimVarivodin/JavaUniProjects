@@ -8,9 +8,7 @@ public class Main {
      *      генерация случайных чисел целого типа в заданном диапазоне
      * */
     public static int generateRandom(int min, int max){
-        int res = (int)( Math.random() * (max - min + 1) + min);
-
-        return res;
+        return (int)( Math.random() * (max - min + 1) + min);
     }
 
     /**
@@ -18,16 +16,16 @@ public class Main {
      * */
     public static void main(String[] args) {
         // cоздание переменных размера и сканера
-        int size1 = 0, size2 = 0;
+
         Scanner inp = new Scanner(System.in);
 
         // введение данных о размере массива книг
         System.out.print("Введите количество книг: ");
-        size1 = inp.nextInt();// возможны ошибки при неправильном вводе
+        int size1 = inp.nextInt();// возможны ошибки при неправильном вводе
 
         // введение данных о размере массива комиксов
         System.out.print("Введите количество комиксов: ");
-        size2 = inp.nextInt();// возможны ошибки при неправильном вводе
+        int size2 = inp.nextInt();// возможны ошибки при неправильном вводе
 
         // объявление массивов книг и комиксов заданного ранее размера
         Book[] bs = new Book[size1];
@@ -47,15 +45,15 @@ public class Main {
         }
 
         // создание экземпляров Контейнера
-        Container<PaperLiterature> container1 = new Container<PaperLiterature>(bs),
-                                    container2 = new Container<PaperLiterature>(cmcs);
+        Container<PaperLiterature> container1 = new Container<>(bs),
+                                    container2 = new Container<>(cmcs);
 
         // печать контейнера
         container1.Print();
         container2.Print();
 
         // создание переменной типа сортировки и ее инициализация
-        boolean sortType = false;
+        boolean sortType;
         System.out.print("Выберите сортировку:\ntrue - возростающая\nfalse - нисходящая\n->");
         sortType = inp.nextBoolean();// возможны ошибки при неправильном вводе
 
