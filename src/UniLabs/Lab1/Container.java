@@ -5,7 +5,7 @@ package UniLabs.Lab1;
  * класс контейнера
  *
  * */
-public class Container<T> {
+public class Container<T extends PaperLiterature>  {
     /**
      *
      *      поле массива
@@ -133,4 +133,14 @@ public class Container<T> {
         array = null;
         length = 0;
     }
-}
+    public void Sort(boolean AscDesc){
+        for (int i = 0; i< array.length -1; i++){
+            for(int j = 0; j< array.length - i -1; j++){
+                float p1 = array[j].getPrice(),
+                        p2 = array[j+ 1].getPrice();
+                if ((AscDesc && p1 > p2)|| (!AscDesc && p1 < p2))
+                    Swap(j, j+1);
+            }
+        }
+
+    }}
