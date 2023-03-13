@@ -44,7 +44,7 @@ public class Comics extends PaperLiterature {
      *      конструктор по умолчанию
      * */
     public Comics(){
-        this("", 0);
+        this(null, 0);
     }
 
     /**

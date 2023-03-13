@@ -9,25 +9,24 @@ public class Container<T extends PaperLiterature> {
      */
     private T[] array;
 
-    /**
-     * поле длины массива
-     */
-    public int length;
+    public int  getLength(){
+        return  array.length;
+    }
 
     /**
      * конструктор с параметрами
      */
     public Container(T[] array) {
         this.array = array;
-        length = array.length;
     }
-
+    public Container(int l){
+        this.array = (T[]) new Object[l];
+    }
     /**
      * конструктор по умолчанию
      */
     public Container() {
         T[] array = null;
-        length = 0;
 
     }
 
@@ -46,12 +45,11 @@ public class Container<T extends PaperLiterature> {
      * вставка(в конец)
      */
     public void Add(final T element) {
-        if (array != null)
-            AddByIndex(element, array.length);
-        else {
-            array = (T[]) new Object[1];
-            array[0] = element;
+        if(array == null){
+            AddByIndex(element, 0);
         }
+        else AddByIndex(element, array.length);
+
     }
 
     /**
@@ -61,7 +59,7 @@ public class Container<T extends PaperLiterature> {
         T[] buffer = null;
         // создаем новый массив
         if (array != null) {
-            buffer = (T[]) new Object[array.length + 1];
+            buffer = (T[]) new PaperLiterature[array.length + 1];
             int position = index;
             // предусматриваем варианты
             // когда индекс выходит за
@@ -78,15 +76,12 @@ public class Container<T extends PaperLiterature> {
             for (int i = position; i < array.length; i++)
                 buffer[i + 1] = array[i];
         } else {
-            buffer = (T[]) new Object[1];
+            buffer = (T[]) new PaperLiterature[1];
             buffer[0] = elem;
         }
 
         // сохраняем новый массив
         array = buffer;
-        length = array.length;
-        // триггерим сборщик муссора
-        System.gc();
     }
 
     /**
@@ -102,7 +97,7 @@ public class Container<T extends PaperLiterature> {
      */
     public void Delete(final int index) {
         // создаем новый массив
-        T[] buffer = (T[]) new Object[array.length - 1];
+        T[] buffer = (T[]) new PaperLiterature[array.length - 1];
         int position = index;
         // предусматриваем варианты
         // когда индекс выходит за
@@ -119,18 +114,30 @@ public class Container<T extends PaperLiterature> {
             buffer[i - 1] = array[i];
         // сохраняем новый массив
         array = buffer;
-        length = array.length;
-        // триггерим сборщик муссора
-        System.gc();
     }
+    public void SetByIndex(int index, T element){
+        int position = index;
+        // предусматриваем варианты
+        // когда индекс выходит за
+        // рамки массива
+        if (position < 0)
+            position = 0;
+        else if (position >= array.length) {
+            position = array.length - 1;
+        }
+        if (array == null)
+            AddByIndex(element, array.length);
+        else {
+            array[position] = element;
+        }
 
-    /**
+    }    /**
      * печать массива
      */
     public void Print() {
 
-        for (T variable : array
-        ) {
+        for (T variable : array )
+        {
             System.out.println(variable);
         }
     }
@@ -138,7 +145,7 @@ public class Container<T extends PaperLiterature> {
     /**
      * обмен элементов по индексу
      */
-    public void Swap(final int index1, final int index2) {
+    protected void Swap(final int index1, final int index2) {
         T buffer = array[index1];
         array[index1] = array[index2];
         array[index2] = buffer;
@@ -149,8 +156,6 @@ public class Container<T extends PaperLiterature> {
      */
     public void Clear() {
         array = null;
-        length = 0;
-        System.gc();
     }
 
     /**
@@ -162,7 +167,7 @@ public class Container<T extends PaperLiterature> {
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - i - 1; j++) {
                 float p1 = array[j].getPrice(),
-                        p2 = array[j + 1].getPrice();
+                      p2 = array[j + 1].getPrice();
                 if ((AscDesc && p1 > p2) || (!AscDesc && p1 < p2))
                     Swap(j, j + 1);
             }

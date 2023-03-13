@@ -30,27 +30,28 @@ public class Main {
         // объявление массивов книг и комиксов заданного ранее размера
         Book[] bs = new Book[size1];
         Comics[] cmcs = new Comics[size2];
-
+        Container<PaperLiterature> container1= new Container<PaperLiterature>();
         // генерация данных и заполнение статических полей Печатной литературы(предок)
         for(int i = 0; i< size1; i++){
             int j = i+ 1;
             bs[i] = new Book("BookName "+ j, generateRandom(0, j* 100), generateRandom(0, j* 100), generateRandom(0, j* 1000), "AuthorName "+ generateRandom(1, j));
             Book.Add(bs[i]);
+            container1.Add(bs[i]);
         }
         // генерация данных и заполнение статических полей Печатной литературы(предок)
         for(int i = 0; i< size2; i++){
             int j = i+ 1;
             cmcs[i] = new Comics("ComicsName "+j, generateRandom(0, j* 115), "IllustratorName "+ generateRandom(1, j), generateRandom(10,  50) );
             Comics.Add(cmcs[i]);
+            container1.Add( cmcs[i]);
+
         }
 
-        // создание экземпляров Контейнера
-        Container<PaperLiterature> container1 = new Container<>(bs),
-                                    container2 = new Container<>(cmcs);
+
 
         // печать контейнера
         container1.Print();
-        container2.Print();
+
 
         // создание переменной типа сортировки и ее инициализация
         boolean sortType;
@@ -59,11 +60,9 @@ public class Main {
 
         // сортировка контейнеров
         container1.Sort(sortType);
-        container2.Sort(sortType);
 
         // печать отсортированных контейнеров
         container1.Print();
-        container2.Print();
 
         // получение средней цены по всей Печатной литературе(предок)
         System.out.println("Средняя цена по печатной литературе: "+ Book.CountAverage());
@@ -86,7 +85,6 @@ public class Main {
 
         // зануление полей
         container1.Clear();
-        container2.Clear();
 
         // проверка результатов
         System.out.println("Средняя цена по печатной(удаленной) литературе: "+ Book.CountAverage());

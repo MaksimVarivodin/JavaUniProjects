@@ -47,14 +47,14 @@ public class Book extends PaperLiterature {
      *      конструктор по умолчанию
      * */
     public Book (){
-        this(0, 0, "");
+        this(0, 0, null);
     }
 
     /**
      *      конструктор родительского класса
      * */
     public Book(final String name, final float price){
-        this(name, price, 0, 0, "");
+        this(name, price, 0, 0, null );
     }
 
     /**

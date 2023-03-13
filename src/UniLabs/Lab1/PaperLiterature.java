@@ -17,7 +17,7 @@ public abstract class PaperLiterature {
      *      поле цены книги
      * */
     protected float price;
-
+    // BigDecimal
     /**
      *      статическое поле - общая стоимость всех экземпляров книг-наследников
      * */
@@ -39,11 +39,7 @@ public abstract class PaperLiterature {
     /**
      *      конструктор по умолчанию
      * */
-    public PaperLiterature(){
-        this.name = "name";
-        this.price = 0.0f;
-    }
-
+    public PaperLiterature(){};
     /**
      *      геттер цены
      * */
