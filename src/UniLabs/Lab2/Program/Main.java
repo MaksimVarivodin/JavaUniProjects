@@ -1,5 +1,6 @@
 package UniLabs.Lab2.Program;
 
+import UniLabs.Lab2.BookShop.Interfaces.IPaperLit;
 import UniLabs.Lab2.BookShop.Realizations.*;
 
 import java.util.Scanner;
@@ -44,8 +45,6 @@ public class Main {
                 System.out.println(p);
             } catch(ContainerException c){
                 System.out.println(c);
-            } catch (Exception ex){
-                System.out.println(ex);
             }
 
 
@@ -90,12 +89,12 @@ public class Main {
         System.out.println("Средняя цена по печатной литературе: "+ Book.CountAverage());
 
         try {
-            container1.AddByIndex(new Book(), -1);
+            container1.AddByIndex(new Book(), -35);
         } catch (ContainerException c){
             System.out.println(c);
         }
         try{
-            container1.getByIndex(container1.getLength()).setPrice(-1);
+            container1.getByIndex(container1.getLength() - 1).setPrice(-623);
         } catch (ProductException p){
             System.out.println(p);
         }

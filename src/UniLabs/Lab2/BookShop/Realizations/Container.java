@@ -66,7 +66,7 @@ public class Container<T extends IPaperLit> {
         T[] buffer = null;
         // создаем новый массив
         if (array != null) {
-            buffer = (T[]) new Object[array.length + 1];
+            buffer = (T[]) new IPaperLit[array.length + 1];
 
             // предусматриваем варианты
             // когда индекс выходит за
@@ -80,7 +80,7 @@ public class Container<T extends IPaperLit> {
             for (int i = index; i < array.length; i++)
                 buffer[i + 1] = array[i];
         } else {
-            buffer = (T[]) new Object[1];
+            buffer = (T[]) new IPaperLit[1];
             buffer[0] = elem;
         }
 
@@ -106,7 +106,7 @@ public class Container<T extends IPaperLit> {
      */
     public void Delete(final int index) throws ContainerException{
         // создаем новый массив
-        T[] buffer = (T[]) new Object[array.length - 1];
+        T[] buffer = (T[]) new IPaperLit[array.length - 1];
 
         // предусматриваем варианты
         // когда индекс выходит за
