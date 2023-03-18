@@ -30,13 +30,6 @@ public abstract class PaperLiterature implements IPaperLit {
      * */
     private static int BooksCount;
 
-    /**
-     *      конструктор с двумя параметрами
-     * */
-    public PaperLiterature(String name, float price){
-        this.name = name;
-        this.price = price;
-    };
 
     /**
      *      конструктор по умолчанию
@@ -71,7 +64,9 @@ public abstract class PaperLiterature implements IPaperLit {
      *      сеттер цены
      * */
     @Override
-    public void setPrice(float price) {
+    public void setPrice(float price) throws ProductException {
+        if(price < 0.0)
+            throw new ProductException(price);
         this.price = price;
     }
 

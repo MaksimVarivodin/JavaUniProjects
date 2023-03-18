@@ -1,5 +1,7 @@
 package UniLabs.Lab2.BookShop.Interfaces;
 
+import UniLabs.Lab2.BookShop.Realizations.ProductException;
+
 public interface IPaperLit {
     /**
      *      геттер цены
@@ -17,7 +19,7 @@ public interface IPaperLit {
     /**
      *      сеттер цены
      * */
-    void setPrice(float price);
+    void setPrice(float price) throws ProductException;
     /**
      *      преобразование в строку
      * */

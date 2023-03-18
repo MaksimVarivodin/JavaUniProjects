@@ -25,14 +25,20 @@ public class Book extends PaperLiterature implements IBook  {
    /**
     *       конструктор с 5-ю параметрами
     * */
-    public Book(final String name, final float price, final int pages, final int words, final String authorName){
+    public Book(final String name, final float price, final int pages, final int words, final String authorName) throws ProductException{
         /*
         *
         * в этот конструктор заход происходит из любого другого конструктора в классе,
         * что позволяет расссчитывать статические поля без отдельного метода
         *
         * */
-        super(name, price);
+        try{
+            super.setName(name);
+            super.setPrice(price);
+        }catch (ProductException p){
+            throw new ProductException(p);
+        }
+
         this.pages= pages;
         this.words = words;
         this.authorName = authorName;
@@ -41,23 +47,13 @@ public class Book extends PaperLiterature implements IBook  {
     /**
      *      конструктор с 3-мя параметрами
      * */
-    public Book(final int pages, final int words, final String authorName){
-        this("", 0, pages, words,authorName);
-    }
 
     /**
      *      конструктор по умолчанию
      * */
     public Book (){
-        this(0, 0, null);
     }
 
-    /**
-     *      конструктор родительского класса
-     * */
-    public Book(final String name, final float price){
-        this(name, price, 0, 0, null );
-    }
 
     /**
      *      геттер страниц

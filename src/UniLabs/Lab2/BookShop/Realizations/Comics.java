@@ -17,27 +17,19 @@ public class Comics extends PaperLiterature implements IComics {
      * */
     private String Illustrator;
 
-    /**
-     *      конструктор с двумя параметрами(для родительского класса)
-     * */
-    public Comics (final String name, final float price){
-        super(name, price);
-    }
 
-    /**
-     *      конструктор с двумя параметрами
-     * */
-    public Comics(final String Illustrator, final int pages){
-        super();
-        this.Illustrator = Illustrator;
-        this.pages = pages;
-    }
+
 
     /**
      *      конструктор для заполнения всех полей
      * */
-    public Comics(final String name, final float price, final String Illustrator, final int pages){
-        this(name, price);
+    public Comics(final String name, final float price, final String Illustrator, final int pages)throws ProductException{
+        try{
+            super.setPrice(price);
+            super.setName(name);
+        } catch(ProductException p){
+            throw new ProductException(p);
+        }
         this.Illustrator = Illustrator;
         this.pages = pages;
     }
@@ -45,9 +37,7 @@ public class Comics extends PaperLiterature implements IComics {
     /**
      *      конструктор по умолчанию
      * */
-    public Comics(){
-        this(null, 0);
-    }
+    public Comics(){}
 
     /**
      *      получение страниц

@@ -1,9 +1,6 @@
 package UniLabs.Lab2.Program;
 
-import UniLabs.Lab2.BookShop.Realizations.Book;
-import UniLabs.Lab2.BookShop.Realizations.Comics;
-import UniLabs.Lab2.BookShop.Realizations.Container;
-import UniLabs.Lab2.BookShop.Realizations.PaperLiterature;
+import UniLabs.Lab2.BookShop.Realizations.*;
 
 import java.util.Scanner;
 
@@ -39,16 +36,36 @@ public class Main {
         // генерация данных и заполнение статических полей Печатной литературы(предок)
         for(int i = 0; i< size1; i++){
             int j = i+ 1;
-            bs[i] = new Book("BookName "+ j, generateRandom(0, j* 100), generateRandom(0, j* 100), generateRandom(0, j* 1000), "AuthorName "+ generateRandom(1, j));
-            Book.Add(bs[i]);
-            container1.Add(bs[i]);
+            try{
+                bs[i] = new Book("BookName "+ j, generateRandom(0, j* 100), generateRandom(0, j* 100), generateRandom(0, j* 1000), "AuthorName "+ generateRandom(1, j));
+                Book.Add(bs[i]);
+                container1.Add(bs[i]);
+            } catch(ProductException p){
+                System.out.println(p);
+            } catch(ContainerException c){
+                System.out.println(c);
+            } catch (Exception ex){
+                System.out.println(ex);
+            }
+
+
+
         }
         // генерация данных и заполнение статических полей Печатной литературы(предок)
         for(int i = 0; i< size2; i++){
             int j = i+ 1;
-            cmcs[i] = new Comics("ComicsName "+j, generateRandom(0, j* 115), "IllustratorName "+ generateRandom(1, j), generateRandom(10,  50) );
-            Comics.Add(cmcs[i]);
-            container1.Add( cmcs[i]);
+            try{
+                cmcs[i] = new Comics("ComicsName "+j, generateRandom(0, j* 115), "IllustratorName "+ generateRandom(1, j), generateRandom(10,  50) );
+                Comics.Add(cmcs[i]);
+                container1.Add( cmcs[i]);
+            } catch(ProductException p){
+                System.out.println(p);
+            } catch(ContainerException c){
+                System.out.println(c);
+            } catch (Exception ex){
+                System.out.println(ex);
+            }
+
 
         }
 
@@ -72,6 +89,16 @@ public class Main {
         // получение средней цены по всей Печатной литературе(предок)
         System.out.println("Средняя цена по печатной литературе: "+ Book.CountAverage());
 
+        try {
+            container1.AddByIndex(new Book(), -1);
+        } catch (ContainerException c){
+            System.out.println(c);
+        }
+        try{
+            container1.getByIndex(container1.getLength()).setPrice(-1);
+        } catch (ProductException p){
+            System.out.println(p);
+        }
         /*
          *  я тут это делаю не потому что гк это не очистит,
          *  а потому что хочу использовать методы,

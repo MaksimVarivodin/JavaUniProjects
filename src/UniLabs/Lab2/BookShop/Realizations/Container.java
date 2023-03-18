@@ -46,36 +46,38 @@ public class Container<T extends IPaperLit> {
     /**
      * вставка(в конец)
      */
-    public void Add(final T element) {
+    public void Add(final T element) throws ContainerException {
         if(array == null){
-            AddByIndex(element, 0);
+            try{
+                AddByIndex(element, 0);
+            }catch(ContainerException c){
+                throw new ContainerException(c);
+            }
+
         }
-        else AddByIndex(element, array.length);
+        else AddByIndex(element, array.length - 1);
 
     }
 
     /**
      * вставка по индексу
      */
-    public void AddByIndex(final T elem, final int index) {
+    public void AddByIndex(final T elem, final int index) throws ContainerException  {
         T[] buffer = null;
         // создаем новый массив
         if (array != null) {
             buffer = (T[]) new Object[array.length + 1];
-            int position = index;
+
             // предусматриваем варианты
             // когда индекс выходит за
             // рамки массива
-            if (position < 0)
-                position = 0;
-            else if (position >= array.length) {
-                position = array.length;
-            }
+            if (index < 0 || index >= array.length)
+                throw new ContainerException(index);
             // заполняем новый массив
-            for (int i = 0; i < position; i++)
+            for (int i = 0; i < index; i++)
                 buffer[i] = array[i];
-            buffer[position] = elem;
-            for (int i = position; i < array.length; i++)
+            buffer[index] = elem;
+            for (int i = index; i < array.length; i++)
                 buffer[i + 1] = array[i];
         } else {
             buffer = (T[]) new Object[1];
@@ -89,48 +91,50 @@ public class Container<T extends IPaperLit> {
     /**
      * удаление из конца
      */
-    public void Delete() {
+    public void Delete() throws ContainerException {
         if (array != null)
-            Delete(array.length);
+            try{
+                Delete(array.length - 1);
+            }catch (ContainerException c){
+                throw new ContainerException(c);
+            }
+
     }
 
     /**
      * удаление по индексу
      */
-    public void Delete(final int index) {
+    public void Delete(final int index) throws ContainerException{
         // создаем новый массив
         T[] buffer = (T[]) new Object[array.length - 1];
-        int position = index;
+
         // предусматриваем варианты
         // когда индекс выходит за
         // рамки массива
-        if (position < 0)
-            position = 0;
-        else if (position >= array.length) {
-            position = array.length - 1;
-        }
+        if (index < 0 || index >= array.length)
+            throw new ContainerException(index);
         // заполняем новый массив
-        for (int i = 0; i < position; i++)
+        for (int i = 0; i < index; i++)
             buffer[i] = array[i];
-        for (int i = position + 1; i < array.length; i++)
+        for (int i = index + 1; i < array.length; i++)
             buffer[i - 1] = array[i];
         // сохраняем новый массив
         array = buffer;
     }
-    public void SetByIndex(int index, T element){
-        int position = index;
+    public void SetByIndex(int index, T element) throws ContainerException{
         // предусматриваем варианты
         // когда индекс выходит за
         // рамки массива
-        if (position < 0)
-            position = 0;
-        else if (position >= array.length) {
-            position = array.length - 1;
-        }
+        if (index < 0 || index >= array.length)
+            throw new ContainerException(index);
         if (array == null)
-            AddByIndex(element, array.length);
+            try{
+                AddByIndex(element, 0);
+            } catch(ContainerException c){
+                throw new ContainerException(c);
+            }
         else {
-            array[position] = element;
+            array[index] = element;
         }
 
     }    /**
