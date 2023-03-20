@@ -32,12 +32,10 @@ public class Book extends PaperLiterature implements IBook  {
         * что позволяет расссчитывать статические поля без отдельного метода
         *
         * */
-        try{
-            super.setName(name);
-            super.setPrice(price);
-        }catch (ProductException p){
-            throw new ProductException(p);
-        }
+
+        super.setName(name);
+        super.setPrice(price);
+
 
         this.pages= pages;
         this.words = words;

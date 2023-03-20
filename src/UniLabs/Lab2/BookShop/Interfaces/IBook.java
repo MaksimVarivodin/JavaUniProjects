@@ -33,10 +33,5 @@ public interface IBook extends IPaperLit {
      * */
     void setWords(int words) ;
 
-    /**
-     *      преобразование в строку
-     * */
-    @Override
-    String toString();
 
 }

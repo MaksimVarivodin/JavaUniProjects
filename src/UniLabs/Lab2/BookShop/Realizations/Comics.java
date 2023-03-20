@@ -24,12 +24,9 @@ public class Comics extends PaperLiterature implements IComics {
      *      конструктор для заполнения всех полей
      * */
     public Comics(final String name, final float price, final String Illustrator, final int pages)throws ProductException{
-        try{
-            super.setPrice(price);
-            super.setName(name);
-        } catch(ProductException p){
-            throw new ProductException(p);
-        }
+
+        super.setPrice(price);
+        super.setName(name);
         this.Illustrator = Illustrator;
         this.pages = pages;
     }

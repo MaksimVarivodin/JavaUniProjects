@@ -98,6 +98,9 @@ public class Main {
         } catch (ProductException p){
             System.out.println(p);
         }
+        catch (ContainerException c){
+            System.out.println(c);
+        }
         /*
          *  я тут это делаю не потому что гк это не очистит,
          *  а потому что хочу использовать методы,

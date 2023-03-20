@@ -15,12 +15,6 @@ public class Container<T extends IPaperLit> {
         return  array.length;
     }
 
-    /**
-     * конструктор с параметрами
-     */
-    public Container(T[] array) {
-        this.array = array;
-    }
     public Container(int l){
         this.array = (T[]) new Object[l];
     }
@@ -29,18 +23,17 @@ public class Container<T extends IPaperLit> {
      */
     public Container() {
         T[] array = null;
-
     }
 
     /**
      * получить элемент по индексу
      */
-    public T getByIndex(final int index) {
-        if (array.length > 0 && (index < array.length && index >= 0)) {
+    public T getByIndex(final int index) throws ContainerException {
+        if (index < 0 || index >=  array.length) {
+            throw new  ContainerException(index);
+        } else
             return array[index];
-        } else {
-            return null;
-        }
+
     }
 
     /**
@@ -48,12 +41,7 @@ public class Container<T extends IPaperLit> {
      */
     public void Add(final T element) throws ContainerException {
         if(array == null){
-            try{
                 AddByIndex(element, 0);
-            }catch(ContainerException c){
-                throw new ContainerException(c);
-            }
-
         }
         else AddByIndex(element, array.length - 1);
 
@@ -93,11 +81,7 @@ public class Container<T extends IPaperLit> {
      */
     public void Delete() throws ContainerException {
         if (array != null)
-            try{
-                Delete(array.length - 1);
-            }catch (ContainerException c){
-                throw new ContainerException(c);
-            }
+            Delete(array.length - 1);
 
     }
 
@@ -128,11 +112,7 @@ public class Container<T extends IPaperLit> {
         if (index < 0 || index >= array.length)
             throw new ContainerException(index);
         if (array == null)
-            try{
                 AddByIndex(element, 0);
-            } catch(ContainerException c){
-                throw new ContainerException(c);
-            }
         else {
             array[index] = element;
         }
@@ -141,11 +121,13 @@ public class Container<T extends IPaperLit> {
      * печать массива
      */
     public void Print() {
-
-        for (T variable : array )
-        {
-            System.out.println(variable);
-        }
+        if(array == null)
+            System.out.println("Array is Empty");
+        else
+            for (T variable : array )
+                {
+                    System.out.println(variable);
+                }
     }
 
     /**

@@ -20,9 +20,4 @@ public interface IPaperLit {
      *      сеттер цены
      * */
     void setPrice(float price) throws ProductException;
-    /**
-     *      преобразование в строку
-     * */
-    @Override
-    String toString();
 }

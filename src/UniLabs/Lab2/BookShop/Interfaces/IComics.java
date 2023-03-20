@@ -21,11 +21,5 @@ public interface IComics extends IPaperLit {
      * */
     void setIllustrator(String illustrator);
 
-    /**
-     *      преобразование в строку
-     * */
-    @Override
-    String toString();
-
 
 }
