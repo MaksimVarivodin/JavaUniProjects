@@ -1,15 +1,14 @@
-package UniLabs.Lab3.BookShop.Realizations;
+package UniLabs.Lab4.BookShop.Realizations;
 
-import UniLabs.Lab3.BookShop.Interfaces.IPaperLit;
+import UniLabs.Lab4.BookShop.Interfaces.IPaperLit;
 
-import java.util.Enumeration;
-
-import java.util.NoSuchElementException;
+import java.io.*;
+import java.util.*;
 
 /**
  *      класс контейнера
  * */
-public class Container<T extends IPaperLit> {
+public class Container<T extends IPaperLit>implements Serializable  {
     /**
      * поле массива
      */
@@ -73,7 +72,7 @@ public class Container<T extends IPaperLit> {
     public int  getLength(){
         return  array.length;
     }
-
+    public boolean Empty(){ return array== null;}
     public Container(int l){
         this.array = (T[]) new Object[l];
     }
@@ -81,7 +80,10 @@ public class Container<T extends IPaperLit> {
      * конструктор по умолчанию
      */
     public Container() {
-        T[] array = null;
+        T[] array = (T[])new IPaperLit[0];
+    }
+    public Container(Container<T> cont){
+        array = cont.array;
     }
 
     /**
@@ -102,7 +104,7 @@ public class Container<T extends IPaperLit> {
         if(array == null){
                 AddByIndex(element, 0);
         }
-        else AddByIndex(element, array.length - 1);
+        else AddByIndex(element, array.length);
 
     }
 
@@ -118,7 +120,7 @@ public class Container<T extends IPaperLit> {
             // предусматриваем варианты
             // когда индекс выходит за
             // рамки массива
-            if (index < 0 || index >= array.length)
+            if (index < 0 || index > buffer.length)
                 throw new ContainerException(index);
             // заполняем новый массив
             for (int i = 0; i < index; i++)
@@ -176,7 +178,8 @@ public class Container<T extends IPaperLit> {
             array[index] = element;
         }
 
-    }    /**
+    }
+    /**
      * печать массива
      */
     public void Print() {
@@ -187,6 +190,18 @@ public class Container<T extends IPaperLit> {
                 {
                     System.out.println(variable);
                 }
+    }
+    @Override
+    public String toString(){
+        String res = "";
+        if(array != null)
+        {
+            for(int i = 0; i< array.length; i++)
+                res += "[" + i+ "] - { "+ array [i].toString()+ "} \n";
+
+        }
+        return res;
+
     }
 
     /**
@@ -202,7 +217,9 @@ public class Container<T extends IPaperLit> {
      * зануление полей класса, триггеринг gc()
      */
     public void Clear() {
-        array = null;
+        if(array == null)
+            System.out.println("Array is empty");
+        else array = null;
     }
 
     /**
@@ -211,14 +228,43 @@ public class Container<T extends IPaperLit> {
      * AscDesc - false - нисходящий порядок
      */
     public void Sort(boolean AscDesc) {
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 0; j < array.length - i - 1; j++) {
-                float p1 = array[j].getPrice(),
-                      p2 = array[j + 1].getPrice();
-                if ((AscDesc && p1 > p2) || (!AscDesc && p1 < p2))
-                    Swap(j, j + 1);
+        if (array!= null)
+            for (int i = 0; i < array.length - 1; i++) {
+                for (int j = 0; j < array.length - i - 1; j++) {
+                    float p1 = array[j].getPrice(),
+                          p2 = array[j + 1].getPrice();
+                    if ((AscDesc && p1 > p2) || (!AscDesc && p1 < p2))
+                        Swap(j, j + 1);
+                }
             }
+    }
+    public void FillStaticVars(){
+        if (array != null)
+        for (T t : array) {
+            PaperLiterature.Add((PaperLiterature) t);
         }
+    }
+    public void DeleteStaticVars(){
+        if (array != null)
+        for (T t : array) {
+            PaperLiterature.Delete((PaperLiterature) t);
+        }
+    }
+    public void Deserialization(String path)throws FileNotFoundException, IOException, ClassNotFoundException{
+        FileInputStream fis = new FileInputStream(path);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        array = (T[])ois.readObject();
+        fis.close();
+        ois.close();
 
+    }
+    public void Serialization(String path)throws FileNotFoundException, IOException {
+        FileOutputStream fos = new FileOutputStream(path);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(array);
+        fos.flush();
+        fos.close();
+        oos.flush();
+        oos.close();
     }
 }
