@@ -108,7 +108,7 @@ public class Main {
         System.out.print("Enter maximum price: ");
         max = inp.nextFloat();
         try{
-            Enumeration<PaperLiterature> en = container1.PriceFilter(min, max);
+            Enumeration en = container1.PriceFilter(min, max);
             while(en.hasMoreElements()){
                 System.out.println(en.nextElement().toString());
             }

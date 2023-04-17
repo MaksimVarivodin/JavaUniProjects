@@ -14,7 +14,7 @@ public class Container<T extends IPaperLit> {
      * поле массива
      */
     private T[] array;
-    class Enumerator implements Enumeration<T>{
+    class Enumerator implements Enumeration{
         private int position = array.length;
 
         @Override
@@ -24,7 +24,7 @@ public class Container<T extends IPaperLit> {
         }
 
         @Override
-        public T nextElement() throws NoSuchElementException
+        public Object nextElement() throws NoSuchElementException
         {
             if(position == 0)
                 throw new NoSuchElementException("Container");
@@ -33,14 +33,15 @@ public class Container<T extends IPaperLit> {
 
 
     }
-    public Enumeration<T> elements()
+    public Enumeration elements()
     {
         return new Enumerator();
     }
-    public Enumeration<T> PriceFilter(final float minPrice, final float maxPrice)
+    public Enumeration PriceFilter(final float minPrice, final float maxPrice)
     {
 
-        return new Enumeration<T>(){
+        return new Enumeration(){
+            Enumeration en = elements();
             int current = array.length;
             /**
              * тут мы ищем елементы которые входят в пределы
@@ -48,9 +49,11 @@ public class Container<T extends IPaperLit> {
             @Override
             public boolean hasMoreElements()
             {
-                for(int i = current - 1; i> 0;i--){
-                    if(array[i].getPrice() >= minPrice && array[i].getPrice()<= maxPrice){
-                        current = i;
+                while(en.hasMoreElements())
+                {
+                    T obj = (T)en.nextElement();
+                    current--;
+                    if(obj.getPrice() >= minPrice && obj.getPrice()<= maxPrice){
                         return true;
                     }
                 }
@@ -61,7 +64,7 @@ public class Container<T extends IPaperLit> {
              * тут мы возвращаем елементы
              * */
             @Override
-            public T nextElement() throws NoSuchElementException
+            public Object nextElement() throws NoSuchElementException
             {
                 if(current == -1){
                     throw new NoSuchElementException("Container");
